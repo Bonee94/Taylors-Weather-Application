@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -8,9 +9,33 @@
     <script src="https://kit.fontawesome.com/6c0f2d0160.js" crossorigin="anonymous"></script>
     <title>Document</title>
 </head>
+
 <body>
-    
+
+    <header>
+        <h1>Weather Dashboard</h1>
+    </header>
+    <aside>
+        <h2>Search for a City</h2>
+        <input type="text" id="city-search" placeholder="Enter a City">
+        <button class="city-search-button">Search</button>
+        <span id="hor-line"></span>
+
+        <div class="search-history">
+        </div>
+    </aside>
+    <main>
+        <div class="current-day-box">
+            <h2 id="current-city-header"></h2>
+            <ul id="current-city-ul">
+                <li id="current-city-temp"></li>
+                <li id="current-city-wind"></li>
+                <li id="current-city-humidity"></li>
+            </ul>
+        </div>
+    </main>
 
     <script src="./assets/JS/script.js"></script>
 </body>
+
 </html>
