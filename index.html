@@ -25,14 +25,28 @@
         </div>
     </aside>
     <main>
-        <div class="current-day-box">
-            <h2 id="current-city-header"></h2>
+        <section class="box" id="current-day-box">
+            <h2 id="current-city-header"><i id="current-day-weather-icon"></i></h2>
             <ul id="current-city-ul">
                 <li id="current-city-temp"></li>
                 <li id="current-city-wind"></li>
                 <li id="current-city-humidity"></li>
             </ul>
-        </div>
+        </section>
+        <section class="box">
+            <h3>5-Day Forecast</h3>
+            <div class="box" id="five-day-box">
+                <div class="box" id="forecast-card-1">
+                    <h4 id="forecast-date-1"></h4>
+                    <i id="forecast-icon-1"></i>
+                    <ul>
+                        <li id="forecast-temp-1"></li>
+                        <li id="forecast-wind-1"></li>
+                        <li id="forecast-humidity-1"></li>
+                    </ul>
+                </div>
+            </div>
+        </section>
     </main>
 
     <script src="./assets/JS/script.js"></script>
