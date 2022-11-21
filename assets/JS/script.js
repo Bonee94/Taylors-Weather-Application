@@ -97,3 +97,35 @@ function writeCurrentCity(currentCity, currentState) {
     }
 };
 
+function writeCards() {
+
+    // Creates the elements for each card
+    let divEl = document.createElement('div');
+    let h4El = document.createElement('h4');
+    let iconEl = document.createElement('i');
+    let ulEl = document.createElement('ul');
+    let liElTemp = document.createElement('li');
+    let liElWind = document.createElement('li');
+    let liElHumidity = document.createElement('li');
+
+    // Adds needed classes and id's to each element
+    divEl.classList.add('box', 'card');
+    divEl.setAttribute('id', 'forecast-card-' + [i]);
+    h4El.setAttribute('id', 'forecast-date-' + [i]);
+    iconEl.setAttribute('id', 'forecast-icon-' + [i]);
+    ulEl.classList.add('forecast-ul');
+    ulEl.setAttribute('forecast-ul-' + [i]);
+    liElTemp.setAttribute('id', 'forecast-temp-' + [i]);
+    liElWind.setAttribute('id', 'forecast-wind-' + [i]);
+    liElHumidity.setAttribute('id', 'forecast-humidity-' + [i]);
+
+    // Structures the whole card together
+    divEl.appendChild(h4El);
+    divEl.appendChild(iconEl);
+    divEl.appendChild(ulEl);
+    ulEl.appendChild(liElTemp);
+    ulEl.appendChild(liElWind);
+    ulEl.appendChild(liElHumidity);
+
+
+};
