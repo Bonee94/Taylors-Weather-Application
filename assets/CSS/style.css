@@ -83,6 +83,8 @@ main {
     margin: 0 0 .5em;
     padding: .3em;
     width: 15%;
+    flex-direction: column;
+    background-color: rgb(255, 94, 0);
 }
  .input-box {
     display: flex;
@@ -120,11 +122,6 @@ main {
 #five-day-box {
     flex-direction: column;
     
-}
-
-#forecast-card-1 {
-    flex-direction: column;
-    background-color: rgb(255, 94, 0);
 }
 
 #city-search {
