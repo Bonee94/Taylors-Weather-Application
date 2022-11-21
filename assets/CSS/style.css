@@ -1,0 +1,138 @@
+/* Global Mods*/
+body {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    height: 90vh;
+    width: 100vw;
+    margin: 0;
+    padding: 0;
+}
+
+h1 {
+    margin: 0 7em 0 0;
+    padding: 0;
+}
+
+h3 {
+    margin: .7em;
+    padding: 0;
+}
+
+h2,
+h4,
+h5,
+h6 {
+    margin: 0;
+    padding: 0;
+}
+
+ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+
+}
+
+li {
+    margin: 0 0 .4em 0;
+}
+
+header {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    position: relative;
+    width: 100%;
+    background-image: linear-gradient(to left, rgb(8, 65, 139), rgb(12, 194, 201));
+    color: white;
+    font-size: 1.7vw;
+}
+
+aside {
+    background-color: aquamarine;
+    margin: 1em .7em;
+    flex-direction: column;
+    width: 20%;
+    height: 75%;
+    text-align: center;
+}
+
+main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    margin-top: 1em;
+    margin-right: 10%;
+    height: 75%;
+}
+
+
+
+/* Class Mods*/
+.box {
+    display: flex;
+}
+
+.forecast-ul {
+    background-color: rgb(255, 0, 200);
+
+}
+
+.card {
+    margin: 0 0 .5em;
+    padding: .3em;
+    width: 15%;
+}
+
+
+/* ID Mods*/
+
+#current-day-box {
+    margin: 0 0 1em;
+    height: auto;
+    border: solid 2px black;
+    flex-direction: column;
+}
+
+#current-city-ul {
+    margin: 0 0 0 .7em;
+    font-size: 1.2em;
+}
+
+#current-city-header {
+    margin: .5em;
+}
+
+#five-day-section {
+    background-color: rgb(72, 255, 0);
+    flex-direction: column;
+}
+
+#card-container {
+    flex-direction: row;
+    justify-content: space-evenly;
+}
+
+#five-day-box {
+    flex-direction: column;
+    
+}
+
+#forecast-card-1 {
+    flex-direction: column;
+    background-color: rgb(255, 94, 0);
+}
+
+#city-search {
+    margin: .5em .2em;
+}
+
+#city-search-button {
+    margin: .5em .2em;
+}
+
+#hor-line {
+    border-bottom: solid 2px rgba(10, 10, 10, 0.781);
+    margin: .5em .2em;
+}
