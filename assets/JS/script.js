@@ -2,6 +2,7 @@ let searchButton = document.getElementById('city-search-button');
 let currentCityHdr = document.getElementById('current-city-header');
 let daysContainer = document.getElementById('card-container');
 let weatherDates = [];
+let degreeSym = "\u00B0";
 
 let foundLat = "";
 let foundLon = "";
@@ -138,7 +139,7 @@ function getLatLon() {
                     printCity = data[0].name;
                     printState = data[0].state;
                     foundLat = data[0].lat;
-                    foundLon = data[0].lon                    
+                    foundLon = data[0].lon
                 }
 
                 console.log(printCity)
@@ -168,13 +169,15 @@ function getCurrentWeather(latInc, lonInc) {
             let curWind = data.wind.speed;
             let curHumidity = data.main.humidity;
 
-            writeCurrentCityWeather(curTemp,curWind,curHumidity)
+
+            writeCurrentCityWeather(curTemp, curWind, curHumidity)
         })
 };
 
 
 // Takes the Lat and Lon and retreives the weather forecast
 function getWeatherData(latInc, lonInc) {
+    let syncNum = 7;
 
     fetch('http://api.openweathermap.org/data/2.5/forecast?lat=' + latInc + '&lon=' + lonInc + '&units=imperial&appid=86550c0e40a947163465566121712e2e')
         .then(function (response) {
@@ -184,6 +187,24 @@ function getWeatherData(latInc, lonInc) {
             return response.json();
         })
         .then(function (data) {
+            console.log(data)
+            for (let i = 0; i < 5; i++) {
+
+                let dateArray = data.list[syncNum].dt_txt.split(' ')[0].split('-');
+                let timeSplit = data.list[syncNum].dt_txt.split(' ')[1].split(':')[0].split('')[1];
+                let time = timeSplit + 'am';
+                let date = (dateArray[1] + '/' + dateArray[2]) + '/' + dateArray[0];
+                let temp = data.list[syncNum].main.temp + ' F' + degreeSym;
+                let wind = data.list[syncNum].wind.speed + ' mph';
+                let humidity = data.list[syncNum].main.humidity + '%';
+
+
+                console.log(date, temp, wind, time);
+                syncNum = syncNum + 8;
+
+                writeForecast(date, temp, wind, humidity, [i])
+
+            }
 
         })
 };
@@ -234,14 +255,27 @@ function writeCards() {
 writeCards()
 
 
-function writeCurrentCityWeather(curTemp,curWind,curHumidity) {
+function writeCurrentCityWeather(curTemp, curWind, curHumidity) {
     let currentTempEl = document.getElementById('current-city-temp');
     let currentWindEl = document.getElementById('current-city-wind');
     let currentHumidityEl = document.getElementById('current-city-humidity');
 
-    currentTempEl.innerText ='Temp: ' + curTemp;
-    currentWindEl.innerText ='Wind: ' + curWind;
-    currentHumidityEl.innerText ='Humidity: ' + curHumidity;
+    currentTempEl.innerText = 'Temp: ' + curTemp;
+    currentWindEl.innerText = 'Wind: ' + curWind;
+    currentHumidityEl.innerText = 'Humidity: ' + curHumidity;
 
+
+}
+
+function writeForecast(date, temp, wind, humidity, iteration) {
+    let forecastDateEl = document.getElementById('forecast-date-' + iteration);
+    let forecastTempEl = document.getElementById('forecast-temp-' + iteration);
+    let forecastWindEl = document.getElementById('forecast-wind-' + iteration);
+    let forecastHumEl = document.getElementById('forecast-humidity-' + iteration);
+
+    forecastDateEl.innerText = date;
+    forecastTempEl.innerText = 'Temp: ' + temp;
+    forecastWindEl.innerText = 'Wind: ' + wind;
+    forecastHumEl.innerText = 'Humidity:' + humidity;
 
 }
