@@ -147,33 +147,53 @@ function getLatLon() {
                 console.log(foundLon)
 
                 writeCurrentCity(printCity, printState)
+                getCurrentWeather(foundLat, foundLon)
                 getWeatherData(foundLat, foundLon)
             });
     }
 }
 
-// Takes the Lat and Lon ad retreives the weather information
+// Takes the Lat and Lon and retreives the current weather
+function getCurrentWeather(latInc, lonInc) {
+
+    fetch('http://api.openweathermap.org/data/2.5/weather?lat=' + latInc + '&lon=' + lonInc + '&units=imperial&appid=86550c0e40a947163465566121712e2e')
+        .then(function (response) {
+            if (response.status !== 200) {
+                console.log('weather api error')
+            }
+            return response.json();
+        })
+        .then(function (data) {
+            let curTemp = data.main.temp;
+            let curWind = data.wind.speed;
+            let curHumidity = data.main.humidity;
+
+            writeCurrentCityWeather(curTemp,curWind,curHumidity)
+        })
+};
+
+
+// Takes the Lat and Lon and retreives the weather forecast
 function getWeatherData(latInc, lonInc) {
 
     fetch('http://api.openweathermap.org/data/2.5/forecast?lat=' + latInc + '&lon=' + lonInc + '&units=imperial&appid=86550c0e40a947163465566121712e2e')
         .then(function (response) {
             if (response.status !== 200) {
                 console.log('weather api error')
-                return response.json();
-            } else {
-                
             }
-
             return response.json();
         })
-}
+        .then(function (data) {
+
+        })
+};
 
 // Handles Pringting city and state to page
 function writeCurrentCity(currentCity, currentState) {
     if (currentState) {
-        currentCityHdr.innerText = currentCity + ', ' + currentState;
+        currentCityHdr.innerText = currentCity + ', ' + currentState + ' (Current Weather)';
     } else {
-        currentCityHdr.innerText = currentCity;
+        currentCityHdr.innerText = currentCity + ' (Current Weather)';
     }
 };
 
@@ -212,3 +232,16 @@ function writeCards() {
 
 };
 writeCards()
+
+
+function writeCurrentCityWeather(curTemp,curWind,curHumidity) {
+    let currentTempEl = document.getElementById('current-city-temp');
+    let currentWindEl = document.getElementById('current-city-wind');
+    let currentHumidityEl = document.getElementById('current-city-humidity');
+
+    currentTempEl.innerText ='Temp: ' + curTemp;
+    currentWindEl.innerText ='Wind: ' + curWind;
+    currentHumidityEl.innerText ='Humidity: ' + curHumidity;
+
+
+}
