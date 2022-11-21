@@ -4,77 +4,87 @@ let daysContainer = document.getElementById('card-container');
 let weatherDates = [];
 let degreeSym = "\u00B0";
 
+
+
+
 let foundLat = "";
 let foundLon = "";
 
-// function init(){
-//     locationRequested = 'san antonio, texas';
-//     let stateArray = [];
-//     let locSplit = locationRequested.split(',').map(element => element.trim());
+function init(){
+    locationRequested = 'san antonio, texas';
+    let stateArray = [];
+    let locSplit = locationRequested.split(',').map(element => element.trim());
 
 
-//     fetch('http://api.openweathermap.org/geo/1.0/direct?q=' + locationRequested + '&limit=5&appid=86550c0e40a947163465566121712e2e')
-//     .then(function (response) {
-//         if (response.status !== 200) {
-//             console.log("error")
-//             return
-//         }
+    fetch('http://api.openweathermap.org/geo/1.0/direct?q=' + locationRequested + '&limit=5&appid=86550c0e40a947163465566121712e2e')
+    .then(function (response) {
+        if (response.status !== 200) {
+            console.log("error")
+            return
+        }
 
-//         return response.json();
-//     })
-//     .then(function (data) {
-//         foundLat = data[0].lat;
-//         foundLon = data[0].lon
+        return response.json();
+    })
+    .then(function (data) {
+        foundLat = data[0].lat;
+        foundLon = data[0].lon
 
-//         console.log(foundLat)
-//         console.log(foundLon)
+        console.log(foundLat)
+        console.log(foundLon)
 
-//         console.log(data);
-//         // Collecting all the states from the fetch response
-//         for (i = 0; i < data.length; i++) {
-//             stateArray.push(data[i].state);
-//         }
-//         console.log(stateArray);
+        console.log(data);
+        // Collecting all the states from the fetch response
+        for (i = 0; i < data.length; i++) {
+            stateArray.push(data[i].state);
+        }
+        console.log(stateArray);
 
-//         // Converting all states to lowercase to check them
-//         let stateArrayLower = stateArray.map(element => {
-//             return element.toLowerCase();
-//         })
-//         console.log(stateArrayLower);
+        // Converting all states to lowercase to check them
+        let stateArrayLower = stateArray.map(element => {
+            return element.toLowerCase();
+        })
+        console.log(stateArrayLower);
 
-//         // converting input to lowercase
-//         if (locSplit[1]) {
-//             let inputState = (locSplit[1].toLowerCase());
+        // converting input to lowercase
+        if (locSplit[1]) {
+            let inputState = (locSplit[1].toLowerCase());
 
-//             // Checking lowercase array against input
-//             for (i = 0; i < stateArrayLower.length; i++) {
-//                 if (stateArrayLower[i] === inputState) {
-//                     printCity = data[i].name;
-//                     printState = data[i].state;
+            // Checking lowercase array against input
+            for (i = 0; i < stateArrayLower.length; i++) {
+                if (stateArrayLower[i] === inputState) {
+                    printCity = data[i].name;
+                    printState = data[i].state;
+                    foundLat = data[i].lat;
+                    foundLon = data[i].lon;
+
+                    break;
+                }
+            }
+        } else {
+            printCity = data[0].name;
+            printState = data[0].state;
+            foundLat = data[0].lat;
+            foundLon = data[0].lon
+        }
+
+        console.log(printCity)
+        console.log(printState)
+        console.log(foundLat)
+        console.log(foundLon)
+
+        writeCurrentCity(printCity, printState)
+        getCurrentWeather(foundLat, foundLon)
+        getWeatherData(foundLat, foundLon)
+    });
+}
+init()
 
 
-//                     console.log(data[i].state);
-//                     break;
-//                 }
-//             }
-
-
-//             console.log(inputState);
-//         } else {
-//             printCity = data[0].name;
-//             printState = data[0].state;
-//         }
-
-//         console.log(printCity)
-//         console.log(printState)
-
-//         writeCurrentCity(printCity, printState)
-//     });
-// }
-// init()
-
-
-
+document.querySelector('#city-search').addEventListener('keypress', function (e){ 
+    if (e.keyCode == 13) {
+        searchButton.click();
+        getLatLon;
+}});
 searchButton.addEventListener('click', getLatLon);
 
 
@@ -168,9 +178,13 @@ function getCurrentWeather(latInc, lonInc) {
             let curTemp = data.main.temp;
             let curWind = data.wind.speed;
             let curHumidity = data.main.humidity;
+            let iconCurrent = data.weather[0].main;
+
+            console.log(iconCurrent);
 
 
-            writeCurrentCityWeather(curTemp, curWind, curHumidity)
+
+            writeCurrentCityWeather(curTemp, curWind, curHumidity, iconCurrent)
         })
 };
 
@@ -197,12 +211,14 @@ function getWeatherData(latInc, lonInc) {
                 let temp = data.list[syncNum].main.temp + ' F' + degreeSym;
                 let wind = data.list[syncNum].wind.speed + ' mph';
                 let humidity = data.list[syncNum].main.humidity + '%';
+                let icon = data.list[syncNum].weather[0].main;
 
 
-                console.log(date, temp, wind, time);
+
+                console.log(date, temp, wind, time, icon);
                 syncNum = syncNum + 8;
 
-                writeForecast(date, temp, wind, humidity, [i])
+                writeForecast(date, temp, wind, humidity, [i], icon)
 
             }
 
@@ -254,11 +270,26 @@ function writeCards() {
 };
 writeCards()
 
-
-function writeCurrentCityWeather(curTemp, curWind, curHumidity) {
+// Writes the current weather to the main section
+function writeCurrentCityWeather(curTemp, curWind, curHumidity, iconCurrent) {
     let currentTempEl = document.getElementById('current-city-temp');
     let currentWindEl = document.getElementById('current-city-wind');
     let currentHumidityEl = document.getElementById('current-city-humidity');
+    let iconEl = document.getElementById('current-day-weather-icon');
+
+    console.log(iconCurrent)
+
+    iconEl.setAttribute("class", "");
+
+    if (iconCurrent == 'Clouds'|| iconCurrent == 'Fog'){
+        iconEl.classList.add("fas", "fa-cloud");
+    } 
+    if (iconCurrent == 'Rain'){
+        iconEl.classList.add("fa", "fa-cloud-showers-heavy");
+    } 
+    if (iconCurrent == 'Clear'){
+        iconEl.classList.add("far", "fa-sun");
+    }
 
     currentTempEl.innerText = 'Temp: ' + curTemp;
     currentWindEl.innerText = 'Wind: ' + curWind;
@@ -267,11 +298,23 @@ function writeCurrentCityWeather(curTemp, curWind, curHumidity) {
 
 }
 
-function writeForecast(date, temp, wind, humidity, iteration) {
+// Writes the forecast to the cards
+function writeForecast(date, temp, wind, humidity, iteration, iconValue) {
     let forecastDateEl = document.getElementById('forecast-date-' + iteration);
+    let forecastIconEl = document.getElementById('forecast-icon-' + iteration);
     let forecastTempEl = document.getElementById('forecast-temp-' + iteration);
     let forecastWindEl = document.getElementById('forecast-wind-' + iteration);
     let forecastHumEl = document.getElementById('forecast-humidity-' + iteration);
+
+    forecastIconEl.setAttribute("class", "");
+
+    if (iconValue == 'Clouds'|| iconValue == 'Fog'){
+        forecastIconEl.classList.add("fas", "fa-cloud");
+    } else if (iconValue == 'Rain'){
+        forecastIconEl.classList.add("fa", "fa-cloud-showers-heavy");
+    } else if (iconValue == 'Clear'){
+        forecastIconEl.classList.add("far", "fa-sun");
+    }
 
     forecastDateEl.innerText = date;
     forecastTempEl.innerText = 'Temp: ' + temp;

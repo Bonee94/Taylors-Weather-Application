@@ -44,13 +44,12 @@ header {
     justify-content: flex-end;
     position: relative;
     width: 100%;
-    background-image: linear-gradient(to left, rgb(8, 65, 139), rgb(12, 194, 201));
+    background-image: linear-gradient(to left, rgb(8, 65, 139), rgba(168, 97, 5, 0.562));
     color: white;
     font-size: 1.7vw;
 }
 
 aside {
-    background-color: aquamarine;
     margin: 1em .7em;
     flex-direction: column;
     width: 20%;
@@ -67,6 +66,11 @@ main {
     height: 75%;
 }
 
+i {
+    font-size: 2vw;
+    margin: 1vh 2vh;
+}
+
 
 
 /* Class Mods*/
@@ -75,7 +79,8 @@ main {
 }
 
 .forecast-ul {
-    background-color: rgb(255, 0, 200);
+    color: white;
+    background-color: rgb(68, 67, 70);
 
 }
 
@@ -84,12 +89,28 @@ main {
     padding: .3em;
     width: 15%;
     flex-direction: column;
-    background-color: rgb(255, 94, 0);
+    color: white;
+    background-color: rgb(68, 67, 70);
 }
- .input-box {
+
+.input-box {
     display: flex;
     flex-direction: column;
- }
+}
+
+.fa-cloud {
+    color: rgba(134, 156, 196, 0.63);
+
+}
+
+.fa-sun {
+    color: rgb(253, 249, 1);
+
+}
+
+.fa-cloud-showers-heavy {
+    color: blue;
+}
 
 /* ID Mods*/
 
@@ -110,7 +131,6 @@ main {
 }
 
 #five-day-section {
-    background-color: rgb(72, 255, 0);
     flex-direction: column;
 }
 
@@ -121,15 +141,19 @@ main {
 
 #five-day-box {
     flex-direction: column;
-    
+
 }
 
 #city-search {
     margin: .5em .2em;
+    height: 5vh;
+    background-color: rgb(212, 212, 212);
 }
 
 #city-search-button {
     margin: 0 .2em;
+    height: 5vh;
+    background-color: rgb(156, 162, 252);
 }
 
 #hor-line {
