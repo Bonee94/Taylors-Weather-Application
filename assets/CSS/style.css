@@ -84,7 +84,10 @@ main {
     padding: .3em;
     width: 15%;
 }
-
+ .input-box {
+    display: flex;
+    flex-direction: column;
+ }
 
 /* ID Mods*/
 
@@ -129,7 +132,7 @@ main {
 }
 
 #city-search-button {
-    margin: .5em .2em;
+    margin: 0 .2em;
 }
 
 #hor-line {
