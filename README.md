@@ -24,6 +24,7 @@ THEN I am again presented with current and future conditions for that city
 
 
 ## Deployed URL
+* https://bonee94.github.io/Taylors-Weather-Application/
 
 ## Live Application Screenshot
 

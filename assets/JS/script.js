@@ -73,7 +73,7 @@ function init(){
         console.log(foundLat)
         console.log(foundLon)
 
-        writeCurrentCity(printCity, printState)
+        writeCurrentCityLocalLogless(printCity, printState)
         getCurrentWeather(foundLat, foundLon)
         getWeatherData(foundLat, foundLon)
     });
@@ -170,7 +170,7 @@ function getLatLon() {
 // Takes the Lat and Lon and retreives the current weather
 function getCurrentWeather(latInc, lonInc) {
 
-    fetch('http://api.openweathermap.org/data/2.5/weather?lat=' + latInc + '&lon=' + lonInc + '&units=imperial&appid=86550c0e40a947163465566121712e2e')
+    fetch('https://api.openweathermap.org/data/2.5/weather?lat=' + latInc + '&lon=' + lonInc + '&units=imperial&appid=86550c0e40a947163465566121712e2e')
         .then(function (response) {
             if (response.status !== 200) {
                 console.log('weather api error')
@@ -238,7 +238,19 @@ function writeCurrentCity(currentCity, currentState) {
 
     let cityState = (currentCity + ", " + currentState);
     console.log(cityState);
-    logSearchHistory(cityState)
+    getSearchHistory(cityState)
+};
+
+// Handles Pringting city upon init without saving anything to local storage
+function writeCurrentCityLocalLogless(currentCity, currentState) {
+    if (currentState) {
+        currentCityHdr.innerText = currentCity + ', ' + currentState + ' (Current Weather)';
+    } else {
+        currentCityHdr.innerText = currentCity + ' (Current Weather)';
+    }
+
+    let cityState = (currentCity + ", " + currentState);
+    console.log(cityState);
 };
 
 // Prints the 5-Day forecast cards to the page
@@ -330,21 +342,31 @@ function writeForecast(date, temp, wind, humidity, iteration, iconValue) {
 
 }
 
-// function getSearchHistory() {
-//     historyStored.push = JSON.parse(localStorage.getItem('City and State'));
-//     console.log(historyStored);
-// }
-
-function logSearchHistory(cityState) {
+function getSearchHistory(cityState) {
     historySearch = JSON.parse(localStorage.getItem('City and State'));
     console.log(historySearch);
     console.log(historyStored);
+    
+    if (historySearch == null) {
+        historySearch = [];
+    }
 
-    historyStored.concat(historySearch);
+    if (cityState) {
+        historySearch.push(cityState);
+    }
+
+    historyStored = historySearch;
+    console.log(historySearch);
     console.log(historyStored);
 
-    historyStored.push(cityState);
-
-    localStorage.setItem("City and State", JSON.stringify(historyStored));
+    if (cityState) {
+        logSearchHistory(historyStored)
+    }
 }
 
+function logSearchHistory(history) {
+
+    localStorage.setItem("City and State", JSON.stringify(history));
+}
+
+getSearchHistory();
