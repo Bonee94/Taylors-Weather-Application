@@ -6,7 +6,11 @@ let historyStored = [];
 let degreeSym = "\u00B0";
 
 
-
+let clearCities = document.getElementById('city-clear-button')
+clearCities.addEventListener('click', function(e) {
+    e.preventDefault();
+    localStorage.setItem('City and State', JSON.stringify());
+})
 
 let foundLat = "";
 let foundLon = "";
@@ -379,9 +383,9 @@ function renderHistory(historyStored) {
     for (let i = 0; i < historyStored.length; i++) {
 
         if (i < 5) {
-            clearCities.style.display = "inherit"
-        } else if (i = 5 || i > 5) {
             clearCities.style.display = "none"
+        } else if (i = 5 || i > 5) {
+            clearCities.style.display = "inherit"
         }
 
         liElement = document.createElement('button');
