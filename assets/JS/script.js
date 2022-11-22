@@ -1,6 +1,7 @@
 let searchButton = document.getElementById('city-search-button');
 let currentCityHdr = document.getElementById('current-city-header');
 let daysContainer = document.getElementById('card-container');
+let searchHistoryUlEl = document.getElementById('search-history-list');
 let weatherDates = [];
 let degreeSym = "\u00B0";
 
@@ -79,11 +80,12 @@ function init(){
 }
 init()
 
-
-document.querySelector('#city-search').addEventListener('keypress', function (e){ 
+let citySearchInput = document.querySelector('#city-search')
+citySearchInput.addEventListener('keypress', function (e){ 
     if (e.keyCode == 13) {
         searchButton.click();
         getLatLon;
+        
 }});
 searchButton.addEventListener('click', getLatLon);
 
@@ -150,16 +152,17 @@ function getLatLon() {
                     printState = data[0].state;
                     foundLat = data[0].lat;
                     foundLon = data[0].lon
-                }
+                };
 
-                console.log(printCity)
-                console.log(printState)
-                console.log(foundLat)
-                console.log(foundLon)
+                console.log(printCity);
+                console.log(printState);
+                console.log(foundLat);
+                console.log(foundLon);
 
-                writeCurrentCity(printCity, printState)
-                getCurrentWeather(foundLat, foundLon)
-                getWeatherData(foundLat, foundLon)
+                writeCurrentCity(printCity, printState);
+                getCurrentWeather(foundLat, foundLon);
+                getWeatherData(foundLat, foundLon);
+                locationRequestedInput.value = "";
             });
     }
 }
@@ -232,6 +235,10 @@ function writeCurrentCity(currentCity, currentState) {
     } else {
         currentCityHdr.innerText = currentCity + ' (Current Weather)';
     }
+
+    let cityState = (currentCity + ", " + currentState)
+    console.log(cityState)
+    
 };
 
 // Prints the 5-Day forecast cards to the page
@@ -284,7 +291,7 @@ function writeCurrentCityWeather(curTemp, curWind, curHumidity, iconCurrent) {
     if (iconCurrent == 'Clouds'|| iconCurrent == 'Fog'){
         iconEl.classList.add("fas", "fa-cloud");
     } 
-    if (iconCurrent == 'Rain'){
+    if (iconCurrent == 'Rain'|| iconCurrent == 'Mist'){
         iconEl.classList.add("fa", "fa-cloud-showers-heavy");
     } 
     if (iconCurrent == 'Clear'){
@@ -310,7 +317,7 @@ function writeForecast(date, temp, wind, humidity, iteration, iconValue) {
 
     if (iconValue == 'Clouds'|| iconValue == 'Fog'){
         forecastIconEl.classList.add("fas", "fa-cloud");
-    } else if (iconValue == 'Rain'){
+    } else if (iconValue == 'Rain'|| iconValue == 'Mist'){
         forecastIconEl.classList.add("fa", "fa-cloud-showers-heavy");
     } else if (iconValue == 'Clear'){
         forecastIconEl.classList.add("far", "fa-sun");
@@ -320,5 +327,9 @@ function writeForecast(date, temp, wind, humidity, iteration, iconValue) {
     forecastTempEl.innerText = 'Temp: ' + temp;
     forecastWindEl.innerText = 'Wind: ' + wind;
     forecastHumEl.innerText = 'Humidity:' + humidity;
+
+}
+
+function logSearchHistory() {
 
 }
