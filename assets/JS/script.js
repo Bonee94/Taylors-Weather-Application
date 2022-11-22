@@ -2,7 +2,7 @@ let searchButton = document.getElementById('city-search-button');
 let currentCityHdr = document.getElementById('current-city-header');
 let daysContainer = document.getElementById('card-container');
 let searchHistoryUlEl = document.getElementById('search-history-list');
-let weatherDates = [];
+let historyStored = [];
 let degreeSym = "\u00B0";
 
 
@@ -236,9 +236,9 @@ function writeCurrentCity(currentCity, currentState) {
         currentCityHdr.innerText = currentCity + ' (Current Weather)';
     }
 
-    let cityState = (currentCity + ", " + currentState)
-    console.log(cityState)
-    
+    let cityState = (currentCity + ", " + currentState);
+    console.log(cityState);
+    logSearchHistory(cityState)
 };
 
 // Prints the 5-Day forecast cards to the page
@@ -302,7 +302,7 @@ function writeCurrentCityWeather(curTemp, curWind, curHumidity, iconCurrent) {
     currentWindEl.innerText = 'Wind: ' + curWind;
     currentHumidityEl.innerText = 'Humidity: ' + curHumidity;
 
-
+    
 }
 
 // Writes the forecast to the cards
@@ -330,6 +330,21 @@ function writeForecast(date, temp, wind, humidity, iteration, iconValue) {
 
 }
 
-function logSearchHistory() {
+// function getSearchHistory() {
+//     historyStored.push = JSON.parse(localStorage.getItem('City and State'));
+//     console.log(historyStored);
+// }
 
+function logSearchHistory(cityState) {
+    historySearch = JSON.parse(localStorage.getItem('City and State'));
+    console.log(historySearch);
+    console.log(historyStored);
+
+    historyStored.concat(historySearch);
+    console.log(historyStored);
+
+    historyStored.push(cityState);
+
+    localStorage.setItem("City and State", JSON.stringify(historyStored));
 }
+
