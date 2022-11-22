@@ -382,9 +382,9 @@ function renderHistory(historyStored) {
             clearCities.style.display = "none"
         } else if (i = 5 || i > 5) {
             clearCities.style.display = "inline-block"
-
+            
             clearCities.addEventListener('click', function (e) {
-                localStorage.setItem('City and State', JSON.stringify());
+                localStorage.setItem('City and State', JSON.stringify([]));
             })
         }
 
