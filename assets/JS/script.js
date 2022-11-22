@@ -21,7 +21,7 @@ function init(locationRequested) {
     let locSplit = locationRequested.split(',').map(element => element.trim());
 
 
-    fetch('https://api.openweathermap.org/geo/1.0/direct?q=' + locationRequested + '&limit=5&appid=86550c0e40a947163465566121712e2e')
+    fetch('https://api.openweathermap.org/geo/1.0/direct?q=' + locationRequested + '&limit=5&appid=e0a36a8a9f0a4618339f40a872ab44b5')
         .then(function (response) {
             if (response.status !== 200) {
                 console.log("error")
@@ -111,7 +111,7 @@ function getLatLon() {
         return
     }
     else {
-        fetch('https://api.openweathermap.org/geo/1.0/direct?q=' + locationRequested + '&limit=5&appid=86550c0e40a947163465566121712e2e')
+        fetch('https://api.openweathermap.org/geo/1.0/direct?q=' + locationRequested + '&limit=5&appid=e0a36a8a9f0a4618339f40a872ab44b5')
             .then(function (response) {
                 if (response.status !== 200) {
                     console.log("error")
@@ -175,7 +175,7 @@ function getLatLon() {
 // Takes the Lat and Lon and retreives the current weather
 function getCurrentWeather(latInc, lonInc) {
 
-    fetch('https://api.openweathermap.org/data/2.5/weather?lat=' + latInc + '&lon=' + lonInc + '&units=imperial&appid=86550c0e40a947163465566121712e2e')
+    fetch('https://api.openweathermap.org/data/2.5/weather?lat=' + latInc + '&lon=' + lonInc + '&units=imperial&appid=e0a36a8a9f0a4618339f40a872ab44b5')
         .then(function (response) {
             if (response.status !== 200) {
                 console.log('weather api error')
@@ -201,7 +201,7 @@ function getCurrentWeather(latInc, lonInc) {
 function getWeatherData(latInc, lonInc) {
     let syncNum = 7;
 
-    fetch('https://api.openweathermap.org/data/2.5/forecast?lat=' + latInc + '&lon=' + lonInc + '&units=imperial&appid=86550c0e40a947163465566121712e2e')
+    fetch('https://api.openweathermap.org/data/2.5/forecast?lat=' + latInc + '&lon=' + lonInc + '&units=imperial&appid=e0a36a8a9f0a4618339f40a872ab44b5')
         .then(function (response) {
             if (response.status !== 200) {
                 console.log('weather api error')
