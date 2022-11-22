@@ -6,11 +6,7 @@ let historyStored = [];
 let degreeSym = "\u00B0";
 
 
-let clearCities = document.getElementById('city-clear-button')
-clearCities.addEventListener('click', function(e) {
-    e.preventDefault();
-    localStorage.setItem('City and State', JSON.stringify());
-})
+
 
 let foundLat = "";
 let foundLon = "";
@@ -305,7 +301,7 @@ function writeCurrentCityWeather(curTemp, curWind, curHumidity, iconCurrent) {
 
     iconEl.setAttribute("class", "");
 
-    if (iconCurrent == 'Clouds' || iconCurrent == 'Fog') {
+    if (iconCurrent == 'Clouds' || iconCurrent == 'Fog' || iconCurrent == 'Haze') {
         iconEl.classList.add("fas", "fa-cloud");
     }
     if (iconCurrent == 'Rain' || iconCurrent == 'Mist') {
@@ -332,7 +328,7 @@ function writeForecast(date, temp, wind, humidity, iteration, iconValue) {
 
     forecastIconEl.setAttribute("class", "");
 
-    if (iconValue == 'Clouds' || iconValue == 'Fog') {
+    if (iconValue == 'Clouds' || iconValue == 'Fog' || iconValue == 'Haze') {
         forecastIconEl.classList.add("fas", "fa-cloud");
     } else if (iconValue == 'Rain' || iconValue == 'Mist') {
         forecastIconEl.classList.add("fa", "fa-cloud-showers-heavy");
@@ -385,7 +381,11 @@ function renderHistory(historyStored) {
         if (i < 5) {
             clearCities.style.display = "none"
         } else if (i = 5 || i > 5) {
-            clearCities.style.display = "inherit"
+            clearCities.style.display = "inline-block"
+
+            clearCities.addEventListener('click', function (e) {
+                localStorage.setItem('City and State', JSON.stringify());
+            })
         }
 
         liElement = document.createElement('button');
