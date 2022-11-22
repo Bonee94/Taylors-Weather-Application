@@ -113,6 +113,18 @@ i {
     color: blue;
 }
 
+.history-list {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: rgb(97, 89, 89);
+    margin: .4em .2em;
+    height: 6vh;
+    background-color: rgb(192, 190, 187);
+    width: 98%;
+    font-weight: 800;
+}
+
 /* ID Mods*/
 
 #current-day-box {

@@ -1,7 +1,7 @@
 let searchButton = document.getElementById('city-search-button');
 let currentCityHdr = document.getElementById('current-city-header');
 let daysContainer = document.getElementById('card-container');
-let searchHistoryUlEl = document.getElementById('search-history-list');
+let searchHistoryEl = document.getElementById('search-history-list');
 let historyStored = [];
 let degreeSym = "\u00B0";
 
@@ -11,82 +11,83 @@ let degreeSym = "\u00B0";
 let foundLat = "";
 let foundLon = "";
 
-function init(){
+function init() {
     locationRequested = 'san antonio, texas';
     let stateArray = [];
     let locSplit = locationRequested.split(',').map(element => element.trim());
 
 
     fetch('http://api.openweathermap.org/geo/1.0/direct?q=' + locationRequested + '&limit=5&appid=86550c0e40a947163465566121712e2e')
-    .then(function (response) {
-        if (response.status !== 200) {
-            console.log("error")
-            return
-        }
-
-        return response.json();
-    })
-    .then(function (data) {
-        foundLat = data[0].lat;
-        foundLon = data[0].lon
-
-        console.log(foundLat)
-        console.log(foundLon)
-
-        console.log(data);
-        // Collecting all the states from the fetch response
-        for (i = 0; i < data.length; i++) {
-            stateArray.push(data[i].state);
-        }
-        console.log(stateArray);
-
-        // Converting all states to lowercase to check them
-        let stateArrayLower = stateArray.map(element => {
-            return element.toLowerCase();
-        })
-        console.log(stateArrayLower);
-
-        // converting input to lowercase
-        if (locSplit[1]) {
-            let inputState = (locSplit[1].toLowerCase());
-
-            // Checking lowercase array against input
-            for (i = 0; i < stateArrayLower.length; i++) {
-                if (stateArrayLower[i] === inputState) {
-                    printCity = data[i].name;
-                    printState = data[i].state;
-                    foundLat = data[i].lat;
-                    foundLon = data[i].lon;
-
-                    break;
-                }
+        .then(function (response) {
+            if (response.status !== 200) {
+                console.log("error")
+                return
             }
-        } else {
-            printCity = data[0].name;
-            printState = data[0].state;
+
+            return response.json();
+        })
+        .then(function (data) {
             foundLat = data[0].lat;
             foundLon = data[0].lon
-        }
 
-        console.log(printCity)
-        console.log(printState)
-        console.log(foundLat)
-        console.log(foundLon)
+            console.log(foundLat)
+            console.log(foundLon)
 
-        writeCurrentCityLocalLogless(printCity, printState)
-        getCurrentWeather(foundLat, foundLon)
-        getWeatherData(foundLat, foundLon)
-    });
+            console.log(data);
+            // Collecting all the states from the fetch response
+            for (i = 0; i < data.length; i++) {
+                stateArray.push(data[i].state);
+            }
+            console.log(stateArray);
+
+            // Converting all states to lowercase to check them
+            let stateArrayLower = stateArray.map(element => {
+                return element.toLowerCase();
+            })
+            console.log(stateArrayLower);
+
+            // converting input to lowercase
+            if (locSplit[1]) {
+                let inputState = (locSplit[1].toLowerCase());
+
+                // Checking lowercase array against input
+                for (i = 0; i < stateArrayLower.length; i++) {
+                    if (stateArrayLower[i] === inputState) {
+                        printCity = data[i].name;
+                        printState = data[i].state;
+                        foundLat = data[i].lat;
+                        foundLon = data[i].lon;
+
+                        break;
+                    }
+                }
+            } else {
+                printCity = data[0].name;
+                printState = data[0].state;
+                foundLat = data[0].lat;
+                foundLon = data[0].lon
+            }
+
+            console.log(printCity)
+            console.log(printState)
+            console.log(foundLat)
+            console.log(foundLon)
+
+            writeCurrentCityLocalLogless(printCity, printState)
+            getCurrentWeather(foundLat, foundLon)
+            getWeatherData(foundLat, foundLon)
+        });
 }
 init()
 
 let citySearchInput = document.querySelector('#city-search')
-citySearchInput.addEventListener('keypress', function (e){ 
+citySearchInput.addEventListener('keypress', function (e) {
     if (e.keyCode == 13) {
         searchButton.click();
         getLatLon;
-        
-}});
+
+    }
+});
 searchButton.addEventListener('click', getLatLon);
 
 
@@ -300,13 +301,13 @@ function writeCurrentCityWeather(curTemp, curWind, curHumidity, iconCurrent) {
 
     iconEl.setAttribute("class", "");
 
-    if (iconCurrent == 'Clouds'|| iconCurrent == 'Fog'){
+    if (iconCurrent == 'Clouds' || iconCurrent == 'Fog') {
         iconEl.classList.add("fas", "fa-cloud");
-    } 
-    if (iconCurrent == 'Rain'|| iconCurrent == 'Mist'){
+    }
+    if (iconCurrent == 'Rain' || iconCurrent == 'Mist') {
         iconEl.classList.add("fa", "fa-cloud-showers-heavy");
-    } 
-    if (iconCurrent == 'Clear'){
+    }
+    if (iconCurrent == 'Clear') {
         iconEl.classList.add("far", "fa-sun");
     }
 
@@ -314,7 +315,7 @@ function writeCurrentCityWeather(curTemp, curWind, curHumidity, iconCurrent) {
     currentWindEl.innerText = 'Wind: ' + curWind;
     currentHumidityEl.innerText = 'Humidity: ' + curHumidity;
 
-    
+
 }
 
 // Writes the forecast to the cards
@@ -327,11 +328,11 @@ function writeForecast(date, temp, wind, humidity, iteration, iconValue) {
 
     forecastIconEl.setAttribute("class", "");
 
-    if (iconValue == 'Clouds'|| iconValue == 'Fog'){
+    if (iconValue == 'Clouds' || iconValue == 'Fog') {
         forecastIconEl.classList.add("fas", "fa-cloud");
-    } else if (iconValue == 'Rain'|| iconValue == 'Mist'){
+    } else if (iconValue == 'Rain' || iconValue == 'Mist') {
         forecastIconEl.classList.add("fa", "fa-cloud-showers-heavy");
-    } else if (iconValue == 'Clear'){
+    } else if (iconValue == 'Clear') {
         forecastIconEl.classList.add("far", "fa-sun");
     }
 
@@ -346,7 +347,7 @@ function getSearchHistory(cityState) {
     historySearch = JSON.parse(localStorage.getItem('City and State'));
     console.log(historySearch);
     console.log(historyStored);
-    
+
     if (historySearch == null) {
         historySearch = [];
     }
@@ -359,6 +360,8 @@ function getSearchHistory(cityState) {
     console.log(historySearch);
     console.log(historyStored);
 
+    renderHistory(historyStored);
+
     if (cityState) {
         logSearchHistory(historyStored)
     }
@@ -369,4 +372,18 @@ function logSearchHistory(history) {
     localStorage.setItem("City and State", JSON.stringify(history));
 }
 
-getSearchHistory();
+function renderHistory(historyStored) {
+    searchHistoryEl.innerHTML = "";
+    
+    for (let i = 0; i < historyStored.length; i++) {
+        
+        liElement = document.createElement('button');
+        liElement.setAttribute("class", "history-list");
+
+        liElement.innerText = historyStored[i];
+        searchHistoryEl.appendChild(liElement);
+
+
+    }}
+
+    getSearchHistory();
