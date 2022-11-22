@@ -11,13 +11,13 @@ let degreeSym = "\u00B0";
 let foundLat = "";
 let foundLon = "";
 
-function init() {
-    locationRequested = 'san antonio, texas';
+function init(locationRequested) {
+
     let stateArray = [];
     let locSplit = locationRequested.split(',').map(element => element.trim());
 
 
-    fetch('http://api.openweathermap.org/geo/1.0/direct?q=' + locationRequested + '&limit=5&appid=86550c0e40a947163465566121712e2e')
+    fetch('https://api.openweathermap.org/geo/1.0/direct?q=' + locationRequested + '&limit=5&appid=86550c0e40a947163465566121712e2e')
         .then(function (response) {
             if (response.status !== 200) {
                 console.log("error")
@@ -78,7 +78,7 @@ function init() {
             getWeatherData(foundLat, foundLon)
         });
 }
-init()
+init('san antonio, texas')
 
 let citySearchInput = document.querySelector('#city-search')
 citySearchInput.addEventListener('keypress', function (e) {
@@ -107,7 +107,7 @@ function getLatLon() {
         return
     }
     else {
-        fetch('http://api.openweathermap.org/geo/1.0/direct?q=' + locationRequested + '&limit=5&appid=86550c0e40a947163465566121712e2e')
+        fetch('https://api.openweathermap.org/geo/1.0/direct?q=' + locationRequested + '&limit=5&appid=86550c0e40a947163465566121712e2e')
             .then(function (response) {
                 if (response.status !== 200) {
                     console.log("error")
@@ -197,7 +197,7 @@ function getCurrentWeather(latInc, lonInc) {
 function getWeatherData(latInc, lonInc) {
     let syncNum = 7;
 
-    fetch('http://api.openweathermap.org/data/2.5/forecast?lat=' + latInc + '&lon=' + lonInc + '&units=imperial&appid=86550c0e40a947163465566121712e2e')
+    fetch('https://api.openweathermap.org/data/2.5/forecast?lat=' + latInc + '&lon=' + lonInc + '&units=imperial&appid=86550c0e40a947163465566121712e2e')
         .then(function (response) {
             if (response.status !== 200) {
                 console.log('weather api error')
@@ -374,16 +374,33 @@ function logSearchHistory(history) {
 
 function renderHistory(historyStored) {
     searchHistoryEl.innerHTML = "";
-    
+    let clearCities = document.getElementById('city-clear-button')
+
     for (let i = 0; i < historyStored.length; i++) {
-        
+
+        if (i < 5) {
+            clearCities.style.display = "inherit"
+        } else if (i = 5 || i > 5) {
+            clearCities.style.display = "none"
+        }
+
         liElement = document.createElement('button');
         liElement.setAttribute("class", "history-list");
-
+        liElement.setAttribute("id", "history-button-" + i);
         liElement.innerText = historyStored[i];
         searchHistoryEl.appendChild(liElement);
 
+        let historyButton = document.getElementById("history-button-" + i);
 
-    }}
+        historyButton.addEventListener('click', historyToSearch.bind(null, historyStored, i), false)
 
-    getSearchHistory();
+
+    }
+}
+
+function historyToSearch(historyStored, iteration) {
+    console.log(historyStored[iteration]);
+    let sameSearch = historyStored[iteration];
+    init(sameSearch)
+}
+getSearchHistory();
