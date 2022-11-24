@@ -73,7 +73,13 @@ function init(locationRequested) {
             console.log(foundLat)
             console.log(foundLon)
 
-            writeCurrentCityLocalLogless(printCity, printState)
+            let day = new Date().getDate();
+            let month = new Date().getMonth() + 1;
+            let year = new Date().getFullYear();
+            let currentDayDate = month + '/' + day + '/' + year;
+            console.log(currentDayDate)
+
+            writeCurrentCityLocalLogless(printCity, printState, currentDayDate)
             getCurrentWeather(foundLat, foundLon)
             getWeatherData(foundLat, foundLon)
         });
@@ -160,7 +166,13 @@ function getLatLon() {
                 console.log(foundLat);
                 console.log(foundLon);
 
-                writeCurrentCity(printCity, printState);
+                let day = new Date().getDate();
+                let month = new Date().getMonth() + 1;
+                let year = new Date().getFullYear();
+                let currentDayDate = month + '/' + day + '/' + year;
+                console.log(currentDayDate)
+
+                writeCurrentCity(printCity, printState, currentDayDate);
                 getCurrentWeather(foundLat, foundLon);
                 getWeatherData(foundLat, foundLon);
                 locationRequestedInput.value = "";
@@ -230,11 +242,13 @@ function getWeatherData(latInc, lonInc) {
 };
 
 // Handles Pringting city and state to page
-function writeCurrentCity(currentCity, currentState) {
+function writeCurrentCity(currentCity, currentState, currentDayDate) {
+    //timeConverter(currentDayDate)
+
     if (currentState) {
-        currentCityHdr.innerText = currentCity + ', ' + currentState + ' (Current Weather)';
+        currentCityHdr.innerText = currentCity + ', ' + currentState + ' ' + currentDayDate + ' (Current Weather)';
     } else {
-        currentCityHdr.innerText = currentCity + ' (Current Weather)';
+        currentCityHdr.innerText = currentCity + ' ' + currentDayDate + ' (Current Weather)';
     }
 
     let cityState = (currentCity + ", " + currentState);
@@ -243,11 +257,11 @@ function writeCurrentCity(currentCity, currentState) {
 };
 
 // Handles Pringting city upon init without saving anything to local storage
-function writeCurrentCityLocalLogless(currentCity, currentState) {
+function writeCurrentCityLocalLogless(currentCity, currentState, currentDayDate) {
     if (currentState) {
-        currentCityHdr.innerText = currentCity + ', ' + currentState + ' (Current Weather)';
+        currentCityHdr.innerText = currentCity + ', ' + currentState + ' ' + currentDayDate + ' (Current Weather)';
     } else {
-        currentCityHdr.innerText = currentCity + ' (Current Weather)';
+        currentCityHdr.innerText = currentCity + ' ' + currentDayDate  + ' (Current Weather)';
     }
 
     let cityState = (currentCity + ", " + currentState);
@@ -382,7 +396,7 @@ function renderHistory(historyStored) {
             clearCities.style.display = "none";
         } else if (i = 5 || i > 5) {
             clearCities.style.display = "inline-block";
-            
+
             clearCities.addEventListener('click', function (e) {
                 localStorage.setItem('City and State', JSON.stringify([]));
                 getSearchHistory();
