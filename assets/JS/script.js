@@ -344,7 +344,7 @@ function writeForecast(date, temp, wind, humidity, iteration, iconValue) {
 }
 
 function getSearchHistory(cityState) {
-    historySearch = JSON.parse(localStorage.getItem('City and State'));
+    let historySearch = JSON.parse(localStorage.getItem('City and State'));
     console.log(historySearch);
     console.log(historyStored);
 
@@ -379,12 +379,14 @@ function renderHistory(historyStored) {
     for (let i = 0; i < historyStored.length; i++) {
 
         if (i < 5) {
-            clearCities.style.display = "none"
+            clearCities.style.display = "none";
         } else if (i = 5 || i > 5) {
-            clearCities.style.display = "inline-block"
+            clearCities.style.display = "inline-block";
             
             clearCities.addEventListener('click', function (e) {
                 localStorage.setItem('City and State', JSON.stringify([]));
+                getSearchHistory();
+                clearCities.style.display = "none";
             })
         }
 
